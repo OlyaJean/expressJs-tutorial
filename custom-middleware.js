@@ -1,15 +1,17 @@
 const express = require('express');
 const app = express();
 
-//define middleware function
 
-const myMiddleware = (req,res,next)=>{
-    console.log('This first middelware will run on every request');
-//next function runs widdleware every time
+const requestTimestampLogger = (req,res,next) =>{
+
+    const timeStamp = new Date().toISOString();
+
+    console.log(`${timeStamp} from ${req.method} to ${req.url}`)
+
     next();
-};
+}
 
-app.use(myMiddleware);
+app.use(requestTimestampLogger)
 
 app.get('/',(req,res)=>{
     res.send('home page')
